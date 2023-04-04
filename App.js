@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, FlatList, StyleSheet, View } from "react-native";
 import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [goals, setGoals] = useState([]);
@@ -30,36 +31,39 @@ export default function App() {
   }
 
   return (
-    <View style={styles.appContainer}>
-      <Button
-        title="Add new goal"
-        color="#5e0acc"
-        onPress={startAddGoalHandler}
-      />
-      <GoalInput
-        onAddGoal={addGoalHandler}
-        onCancel={endAddGoalHandler}
-        visible={modalIsVisible}
-      />
-      <View style={styles.goalsContainer}>
-        {/* Use FlatList insead of ScrollView to display lists */}
-        <FlatList
-          data={goals}
-          keyExtractor={(item, index) => {
-            return item.id;
-          }}
-          renderItem={(itemData) => {
-            return (
-              <GoalItem
-                id={itemData.item.id}
-                text={itemData.item.text}
-                onDelete={deleteGoalHandler}
-              />
-            );
-          }}
+    <>
+      <StatusBar style="light" />
+      <View style={styles.appContainer}>
+        <Button
+          title="Add new goal"
+          color="#5e0acc"
+          onPress={startAddGoalHandler}
         />
+        <GoalInput
+          onAddGoal={addGoalHandler}
+          onCancel={endAddGoalHandler}
+          visible={modalIsVisible}
+        />
+        <View style={styles.goalsContainer}>
+          {/* Use FlatList insead of ScrollView to display lists */}
+          <FlatList
+            data={goals}
+            keyExtractor={(item, index) => {
+              return item.id;
+            }}
+            renderItem={(itemData) => {
+              return (
+                <GoalItem
+                  id={itemData.item.id}
+                  text={itemData.item.text}
+                  onDelete={deleteGoalHandler}
+                />
+              );
+            }}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
