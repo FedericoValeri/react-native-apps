@@ -1,14 +1,35 @@
+import { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function App() {
+  const [enteredGoalText, setEnteredGoalText] = useState("");
+  const [goals, setGoals] = useState([]);
+
+  function goalInputHandler(enteredText) {
+    setEnteredGoalText(enteredText);
+  }
+
+  function addGoalHandler() {
+    setGoals((currentGoals) => [...currentGoals, enteredGoalText]);
+  }
+
   return (
     <View style={styles.appContainer}>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.textInput} placeholder="Your goal" />
-        <Button title="Add goal" />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Your goal"
+          onChangeText={goalInputHandler}
+        />
+        <Button title="Add goal" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-        <Text>List of goals...</Text>
+        {goals.map((goal) => (
+          // Surround Text with View so that style is the same on Android and IOS
+          <View style={styles.goalItem} key={goal}>
+            <Text style={styles.goalText}>{goal}</Text>
+          </View>
+        ))}
       </View>
     </View>
   );
@@ -19,6 +40,18 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 16,
+  },
+  goalsContainer: {
+    flex: 5,
+  },
+  goalItem: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: "#5e0acc",
+  },
+  goalText: {
+    color: "white",
   },
   inputContainer: {
     flex: 1,
@@ -35,8 +68,5 @@ const styles = StyleSheet.create({
     width: "70%",
     marginRight: 8,
     padding: 8,
-  },
-  goalsContainer: {
-    flex: 5,
   },
 });
