@@ -1,9 +1,9 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-export default function GoalItem({ text, onDelete }) {
+export default function GoalItem({ id, text, onDelete }) {
   return (
-    <Pressable onPress={onDelete}>
+    <Pressable onPress={onDelete.bind(this, id)}>
       {/* //Surround Text with View so that style is the same on Android and IOS */}
       <View style={styles.goalItem}>
         <Text style={styles.goalText}>{text}</Text>
