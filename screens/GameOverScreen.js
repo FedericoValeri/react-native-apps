@@ -1,7 +1,7 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import Title from "../components/ui/Title";
+import { Image, StyleSheet, Text, View, Dimensions } from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
+import Title from "../components/ui/Title";
 import Colors from "../constants/colors";
 
 export default function GameOverScreen({
@@ -28,6 +28,8 @@ export default function GameOverScreen({
   );
 }
 
+const deviceWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
   highlight: {
     fontFamily: "open-sans-bold",
@@ -38,9 +40,9 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   imageContainer: {
-    borderRadius: 150,
-    width: 300,
-    height: 300,
+    width: deviceWidth < 380 ? 150 : 300,
+    height: deviceWidth < 380 ? 150 : 300,
+    borderRadius: deviceWidth < 380 ? 75 : 150,
     borderWidth: 3,
     borderColor: Colors.primary800,
     overflow: "hidden",
